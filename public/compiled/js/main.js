@@ -51,7 +51,7 @@ var TodoApp = function(){
 		self.remainingTasks = ko.computed(function(){
 			return self.taskList().filter(function (task) {
 				return !task.completed();
-			}).length;
+			}).length + " items left";
 		}, this); 
 	//#endregion
 	
