@@ -115,17 +115,20 @@ body
 			.panel--list-modes
 				justify-content: center
 				align-content: center
-				padding-left: 20%
+				padding-left: 10%
 				margin-block-start: 1em
 				margin-block-end: 1em
 				margin-inline-start: 0px
 				margin-inline-end: 0px
 				a
+					color: $black
+					text-decoration: none
 					padding-right: 10px
 					text-decoration: none
 					&:active, &:hover, &:visited
 						color: $black
-						text-decoration: none
+					&:nth-child(4)
+						padding: 0 0 0 15px
 
 .styled-checkbox 
   position: absolute // take it out of document flow
