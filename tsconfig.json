@@ -1,0 +1,12 @@
+{
+	"files": [
+		"./public/js/*.ts",
+		"./public/js/require-config.ts"
+	],
+	"compilerOptions": {
+		"noImplicitAny": true,
+		"sourceMap": true,
+		"module": "amd",
+		"target": "es5"
+	}
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+		<title>Hello Knockout!</title>
+		<link rel="stylesheet" href="../public/compiled/css/style.css">
+    </head>
+    <body>
+		<h2 class="todo-title">todo;</h2>
+		<div class="todo-list--container">
+			<div class="todo--list--input">
+				<input class="input--newItem" type="text" name="" id="" placeholder="What needs to be done?" autofocus>
+			</div>
+			<div class="todo-list--list">
+				<ul>
+					<li>
+						<div class="list--toggle">
+							<input type="checkbox" id="checkbox_1">
+							<label class="list--text" for="checkbox_1">this is a todo example</label>
+						</div>
+						<!-- <button class="list--destroy"></button> -->
+					</li>
+				</ul>
+			</div>
+			<div class="todo-list--panel">
+				<p class="panel--item-count">3 items left</p>
+				<div class="panel--list-modes">
+					<a href="">All</a>
+					<a href="">Active</a>
+					<a href="">Completed</a>
+				</div>
+			</div>
+		</div>
+
+		<script src="../node_modules/requirejs/require.js"></script>
+		<script src="../public/compiled/js/require-config.js"></script>
+		<script>
+			require(["../public/compiled/js/main"]);
+		</script>
+    </body>
+</html>

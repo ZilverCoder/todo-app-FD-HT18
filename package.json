@@ -1,0 +1,26 @@
+{
+	"name": "to-be-named",
+	"version": "1.0.0",
+	"description": "A to do app, built with node, knockout and ts",
+	"main": "app.js",
+	"scripts": {},
+	"keywords": [],
+	"author": "zilver, chibi",
+	"license": "ISC",
+	"dependencies": {
+		"@types/knockout": "^3.4.59",
+		"gulp-util": "^3.0.8",
+		"knockout": "^3.4.2",
+		"path": "^0.12.7",
+		"requirejs": "^2.3.6"
+	},
+	"devDependencies": {
+		"gulp": "^4.0.0",
+		"gulp-minify": "^3.1.0",
+		"gulp-sass": "^4.0.1",
+		"gulp-typescript": "^5.0.0-alpha.3",
+		"gulp-watch-sass": "^1.4.1",
+		"node-sass": "^4.9.3",
+		"typescript": "^3.0.3"
+	}
+}
