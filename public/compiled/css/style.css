@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 body {
   background: #f5f5f5;
@@ -42,74 +43,65 @@ body {
   list-style-type: none;
   padding-left: 0; }
 
-.todo-list--container .todo-list--list ul li {
+.todo-list--container .todo-list--list li {
+  position: relative;
   font: 400 20px/18px "Montserrat", sans-serif;
   border-bottom: 1px solid #a5a5a5; }
 
-.todo-list--container .todo-list--list .list--toggle {
-  display: grid;
-  grid-template-columns: 10% 90%;
-  margin-top: auto;
-  margin-bottom: auto; }
+.todo-list--container .todo-list--list li:hover .task--destroy {
+  display: block !important; }
 
-.todo-list--container .todo-list--list .list--toggle input[type="checkbox"] {
-  opacity: 0;
+.todo-list--container .todo-list--list li .list--task .task--toggle {
+  text-align: center;
+  width: 40px;
+  height: auto;
   position: absolute;
   top: 0;
-  right: 0; }
+  bottom: 0;
+  margin: auto 0;
+  border: none;
+  -webkit-appearance: none;
+  appearance: none; }
 
-.todo-list--container .todo-list--list .list--toggle label {
-  position: relative;
-  grid-column-start: 2;
+.todo-list--container .todo-list--list li .list--task .task--text {
   word-break: break-all;
-  padding: 15px 15px 15px 15px;
+  padding: 15px 15px 15px 50px;
   display: block;
-  line-height: 1.2; }
-
-.todo-list--container .todo-list--list .list--toggle label::before {
-  content: '';
-  position: absolute;
-  display: inline-block;
-  grid-column-start: 1;
-  background: #eb6123;
-  height: 16px;
-  width: 16px;
-  border: 1px solid #eee;
-  left: -5%;
-  top: 20%; }
-
-.todo-list--container .todo-list--list .list--toggle label::after {
-  content: '';
-  position: absolute;
-  display: inline-block;
-  grid-column-start: 1;
-  height: 6px;
-  width: 9px;
-  border-left: 2px solid #fff;
-  border-bottom: 2px solid #fff;
-  transform: rotate(-45deg);
-  left: -4%;
-  top: 22%; }
-
-.todo-list--container .todo-list--list .list--toggle input[type="checkbox"] + label::after {
-  content: none; }
-
-.todo-list--container .todo-list--list .list--toggle input[type="checkbox"]:checked + label::after {
-  content: ""; }
-
-.todo-list--container .todo-list--list .list--text {
+  line-height: 1.2;
   margin-top: auto;
   margin-bottom: auto; }
 
-.todo-list--container .todo-list--list .list--destroy {
-  position: relative;
+.todo-list--container .todo-list--list li .list--task .task--destroy {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  margin: auto 0;
+  font: 400 20px/18px "Montserrat", sans-serif;
+  font-size: 40px;
+  color: #af5b5e;
   background: none;
-  border: none;
-  color: red;
-  font: 400 20px/18px "Montserrat", sans-serif; }
+  border: none; }
 
-.todo-list--container .todo-list--list .list--destroy:after {
-  content: 'X'; }
+.todo-list--container .todo-list--list li .list--task .task--destroy:hover {
+  display: block; }
+
+.todo-list--container .todo-list--list li .list--task .task--destroy:after {
+  content: '×'; }
+
+.todo-list--container .todo-list--list li .list--task .task--toggle {
+  opacity: 0; }
+
+.todo-list--container .todo-list--list li .list--task .task--toggle + label {
+  background-image: url("../../images/not_checked.svg");
+  background-repeat: no-repeat;
+  background-position: center left; }
+
+.todo-list--container .todo-list--list li .list--task .task--toggle:checked + label {
+  background-image: url("../../images/checked.svg"); }
 
 .todo-list--container .todo-list--panel {
   display: flex;
@@ -136,8 +128,8 @@ body {
 .todo-list--container .todo-list--panel .panel--list-modes a:active, .todo-list--container .todo-list--panel .panel--list-modes a:hover, .todo-list--container .todo-list--panel .panel--list-modes a:visited {
   color: #000; }
 
-.todo-list--container .todo-list--panel .panel--list-modes a:nth-child(4) {
-  padding: 0 0 0 10px; }
+.todo-list--container .todo-list--panel .panel--list-modes a:last-child {
+  padding: 0 0 0 15px; }
 
 .styled-checkbox {
   position: absolute;

@@ -15,11 +15,11 @@
 				<ul>
 					<!--ko foreach: filteredTaskList-->
 					<li>
-						<div class="list--toggle">
-							<input type="checkbox" data-bind="checked: completed, attr: { id: 'task' + $index() }">
-							<label class="list--text" data-bind="text: value, attr: { for: 'task' + $index() }"></label>
+						<div class="list--task">
+							<input class="task--toggle" type="checkbox" data-bind="checked: completed, attr: { id: 'task' + $index() }">
+							<label class="task--text completed" data-bind="text: value, attr: { for: 'task' + $index() }"></label>
+							<button class="task--destroy" data-bind="click: $root.removeTask"></button>
 						</div>
-						<button class="list--destroy" data-bind="click: $root.removeTask"></button>
 					</li>
 					<!--/ko-->
 				</ul>
