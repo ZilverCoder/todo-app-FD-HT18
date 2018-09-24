@@ -51,6 +51,11 @@ var TodoApp = function(){
         self.removeTask = function(todo) {
             self.taskList.remove(todo);
         }.bind(this);
+        self.clearCompletedTasks = function() {
+            self.taskList.remove((todo) => {
+                return todo.taskCompleted;
+            });
+        }.bind(this);
 	//#endregion
 	
 	//#region Filters
