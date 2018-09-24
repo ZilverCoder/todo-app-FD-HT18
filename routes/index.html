@@ -13,7 +13,7 @@
 			</div>
 			<div class="todo-list--list">
 				<ul>
-					<!--ko foreach: taskList-->
+					<!--ko foreach: filteredTaskList-->
 					<li>
 						<div class="list--toggle">
 							<input type="checkbox" data-bind="checked: completed, attr: { id: 'task' + $index() }">
@@ -25,14 +25,12 @@
 				</ul>
 			</div>
 			<div class="todo-list--panel">
-				<p class="panel--item-count" data-bind="text: "></p>
+				<p class="panel--item-count" data-bind="text: remainingTasks"></p>
 				<div class="panel--list-modes">
-					<a href="#All" data-bind="click: ">All</a>
-					<a href="#Active" data-bind="click: ">Active</a>
-					<a href="#Completed" data-bind="click: ">Completed</a>
-				</div>
-				<div class="panel--item-clear">
-					<a href="#Clear" data-bind="click: ">Clear completed</a>
+					<a href="#All" data-bind="click: changeToAll">All</a>
+					<a href="#Active" data-bind="click: changeToActive">Active</a>
+					<a href="#Completed" data-bind="click: changeToCompleted">Completed</a>
+					<a href="#Clear" data-bind="click: , visible: completedTasks">Clear completed</a>
 				</div>
 			</div>
 		</div>

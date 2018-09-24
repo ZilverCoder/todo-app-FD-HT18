@@ -46,6 +46,32 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                 self.taskValue('');
             }).bind(this);
             //#endregion
+            //#region Filter Functions
+            self.filterMode = ko.observable('all');
+            self.filteredTaskList = ko.computed(function () {
+                switch (self.filterMode()) {
+                    case 'todo':
+                        return self.taskList().filter(function (task) {
+                            return !task.completed();
+                        });
+                    case 'done':
+                        return self.taskList().filter(function (task) {
+                            return task.completed();
+                        });
+                    default:
+                        return self.taskList();
+                }
+            }, this);
+            self.changeToAll = function () {
+                self.filterMode('all');
+            };
+            self.changeToActive = function () {
+                self.filterMode('todo');
+            };
+            self.changeToCompleted = function () {
+                self.filterMode('done');
+            };
+            //#endregion
         }
         return TodoApp;
     }());
