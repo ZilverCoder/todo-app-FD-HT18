@@ -9,17 +9,19 @@
 		<h2 class="todo-title">todo;</h2>
 		<div class="todo-list--container">
 			<div class="todo--list--input">
-				<input class="input--newItem" type="text" name="" id="" placeholder="What needs to be done?" autofocus>
+				<input class="input--newItem" type="text" data-bind="value: taskValue, enterKey: addTask" placeholder="What needs to be done?" autofocus>
 			</div>
 			<div class="todo-list--list">
 				<ul>
+					<!--ko foreach: taskList-->
 					<li>
 						<div class="list--toggle">
 							<input type="checkbox" id="checkbox_1">
-							<label class="list--text" for="checkbox_1">this is a todo example</label>
+							<label class="list--text" for="checkbox_1" data-bind="text: value"></label>
 						</div>
 						<!-- <button class="list--destroy"></button> -->
 					</li>
+					<!--/ko-->
 				</ul>
 			</div>
 			<div class="todo-list--panel">
@@ -32,10 +34,12 @@
 			</div>
 		</div>
 
-		<script src="../node_modules/requirejs/require.js"></script>
-		<script src="../public/compiled/js/require-config.js"></script>
-		<script>
+		<!-- <script src="../node_modules/requirejs/require.js"></script>
+		<script src="../public/compiled/js/require-config.js"></script> -->
+		<script src="../node_modules/knockout/build/output/knockout-latest.js"></script>
+		<script src="../public/compiled/js/main.js"></script>
+		<!-- <script>
 			require(["../public/compiled/js/main"]);
-		</script>
+		</script> -->
     </body>
 </html>

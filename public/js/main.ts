@@ -1,13 +1,37 @@
 import * as ko from "knockout";
 
-class HelloViewModel {
-    language: KnockoutObservable<string>
-    framework: KnockoutObservable<string>
+/* class Task{
+	taskValue: KnockoutObservable<string>
+	taskIdentifier: KnockoutObservable<string>
+	taskCompleted: KnockoutObservable<boolean>
+	taskList: KnockoutObservableArray<object>
+	constructor(taskValue: string, taskIdentifier: string, taskCompleted: boolean) {
+		this.taskValue = ko.observable();
+		this.taskIdentifier = ko.observable();
+		this.taskCompleted = ko.observable(false);
+	}
+	makeNew
+} */
 
-    constructor(language: string, framework: string) {
-        this.language = ko.observable(language);
-		this.framework = ko.observable(framework);
+class TodoApp {
+	taskValue: KnockoutObservable<string>
+	taskIdentifier: KnockoutObservable<string>
+	taskCompleted: KnockoutObservable<boolean>
+	taskList: KnockoutObservableArray<string[]>
+	//Functions
+	addTask: KnockoutComputed<string>
+
+    constructor() {
+		var task = function(taskValue, completed){
+			this.taskValue = ko.observable(taskValue);
+			this.taskCompleted = ko.observable(completed);
+		};
+		this.taskList = ko.observableArray();
+		this.taskValue = ko.observable();
+		this.addTask = ko.computed(function(){
+			return this.taskList().push(this.taskValue());
+		}, this);
     }
 }
 
-ko.applyBindings(new HelloViewModel("TypeScript", "Knockout"));
+ko.applyBindings(new TodoApp());
