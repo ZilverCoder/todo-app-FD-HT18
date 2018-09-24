@@ -47,15 +47,24 @@ var TodoApp = function(){
 		self.addTask = function(){
 			self.taskList.push(new task(self.taskValue(), false));
 			self.taskValue('');
-        }.bind(this);
-        self.removeTask = function(todo) {
-            self.taskList.remove(todo);
-        }.bind(this);
-        self.clearCompletedTasks = function() {
-            self.taskList.remove((todo) => {
-                return todo.taskCompleted;
-            });
-        }.bind(this);
+    }.bind(this);
+    self.removeTask = function(todo) {
+        self.taskList.remove(todo);
+    }.bind(this);
+    self.clearCompletedTasks = function() {
+        self.taskList.remove((todo) => {
+            return todo.taskCompleted;
+        });
+    }.bind(this);
+		self.removeTask = function(todo) {
+			self.taskList.remove(todo);
+		}.bind(this);
+		self.remainingTasks = ko.computed(function(){
+			return self.taskList().filter(function (task) {
+				return !task.completed();
+			}).length + " items left";
+		}, this);
+		
 	//#endregion
 	
 	//#region Filters
