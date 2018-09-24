@@ -48,6 +48,11 @@ var TodoApp = function(){
 			self.taskList.push(new task(self.taskValue(), false));
 			self.taskValue('');
 		}.bind(this);
+		self.remainingTasks = ko.computed(function(){
+			return self.taskList().filter(function (task) {
+				return !task.completed();
+			}).length;
+		}, this); 
 	//#endregion
 	
 	//#region Filters
