@@ -19,7 +19,7 @@
 							<input type="checkbox" id="checkbox_1" data-bind="checked: completed">
 							<label class="list--text" for="checkbox_1" data-bind="text: value"></label>
 						</div>
-						<!-- <button class="list--destroy"></button> -->
+						<button class="list--destroy" data-bind="click: $root.removeTask"></button>
 					</li>
 					<!--/ko-->
 				</ul>

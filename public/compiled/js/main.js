@@ -47,7 +47,10 @@ var TodoApp = function(){
 		self.addTask = function(){
 			self.taskList.push(new task(self.taskValue(), false));
 			self.taskValue('');
-		}.bind(this);
+        }.bind(this);
+        self.removeTask = function(todo) {
+            self.taskList.remove(todo);
+        }.bind(this);
 	//#endregion
 	
 	//#region Filters
