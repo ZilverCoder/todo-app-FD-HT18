@@ -54,7 +54,7 @@ var TodoApp = function(){
 		this.clearCompletedTasks = function() {
 			this.taskList.remove((task) => {
 				return task.completed();
-			});
+		  });
 		}.bind(this);
 		self.remainingTasks = ko.computed(function(){
 			return self.taskList().filter(function (task) {
@@ -64,6 +64,30 @@ var TodoApp = function(){
 	//#endregion
 	
 	//#region Filters
+		self.filterMode = ko.observable('all')
+		self.filteredTaskList = ko.computed(function(){
+			switch(this.filterMode()){
+				case 'todo':
+					return self.taskList().filter(function(task){
+						return !task.completed();
+					});
+				case 'done':
+					return self.taskList().filter(function(task){
+						return task.completed();
+					});
+				default:
+					return self.taskList();
+			}
+		}, this);
+		self.changeToAll = function(){
+			self.filterMode('all');
+		}
+		self.changeToActive = function(){
+			self.filterMode('todo');
+		}
+		self.changeToCompleted = function() {
+			self.filterMode('done');
+		}
 	//#endregion	
 }
 
