@@ -14,10 +14,17 @@ class Task {
 
 class TodoApp {
 	taskValue: KnockoutObservable<string>
-	taskCompleted: KnockoutObservable<boolean>
 	taskList: KnockoutObservableArray<object>
 	//Functions
 	addTask: KnockoutComputed<string>
+	remainingTasks: KnockoutComputed<string>
+	completedTasks: KnockoutComputed<boolean>
+	//Filters
+	filterMode: KnockoutObservable<string>
+	filteredTaskList: KnockoutComputed<object>
+	changeToAll: () => void
+	changeToActive: () => void
+	changeToCompleted: () => void
 
     constructor() {
 		let self = this;
@@ -52,9 +59,44 @@ class TodoApp {
 				self.taskList.push(new Task(self.taskValue(), false));
 				self.taskValue('');
 			}).bind(this);
-
+			self.remainingTasks = ko.computed(() => {
+				return self.taskList().filter(function (task: Task) {
+					return !task.completed();
+				}).length + " items left";
+			}, this);
+			self.completedTasks = ko.computed(() => {
+				return self.taskList().filter(function (task: Task){
+					return task.completed();
+				}).length > 0;
+			}, this);
 		//#endregion
-    }
+		//#region Filter Functions
+			self.filterMode = ko.observable('all');
+			self.filteredTaskList = ko.computed(() => {
+				switch(self.filterMode()){
+					case 'todo':
+						return self.taskList().filter((task: Task) => {
+							return !task.completed();
+						});
+					case 'done':
+						return self.taskList().filter((task: Task) => {
+							return task.completed();
+						});
+					default:
+						return self.taskList();
+				}
+			}, this);
+			self.changeToAll = () => {
+				self.filterMode('all');
+			}
+			self.changeToActive = () => {
+				self.filterMode('todo');
+			}
+			self.changeToCompleted = () => {
+				self.filterMode('done');
+			}
+		//#endregion
+	}
 }
 
 ko.applyBindings(new TodoApp());

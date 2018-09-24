@@ -45,6 +45,16 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                 self.taskList.push(new Task(self.taskValue(), false));
                 self.taskValue('');
             }).bind(this);
+            self.remainingTasks = ko.computed(function () {
+                return self.taskList().filter(function (task) {
+                    return !task.completed();
+                }).length + " items left";
+            }, this);
+            self.completedTasks = ko.computed(function () {
+                return self.taskList().filter(function (task) {
+                    return task.completed();
+                }).length > 0;
+            }, this);
             //#endregion
             //#region Filter Functions
             self.filterMode = ko.observable('all');
