@@ -48,13 +48,13 @@ var TodoApp = function(){
 			self.taskList.push(new task(self.taskValue(), false));
 			self.taskValue('');
 		}.bind(this);
-		self.removeTask = function(todo) {
-			self.taskList.remove(todo);
+		self.removeTask = function(task) {
+			self.taskList.remove(task);
 		}.bind(this);
-		self.clearCompletedTasks = function() {
-			self.taskList.remove((todo) => {
-				return todo.completed();
-			});
+		this.clearCompletedTasks = function() {
+			this.taskList.remove((task) => {
+				return task.completed();
+		  });
 		}.bind(this);
 		self.remainingTasks = ko.computed(function(){
 			return self.taskList().filter(function (task) {
