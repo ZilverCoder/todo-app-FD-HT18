@@ -47,7 +47,6 @@ body
 			li
 				position: relative
 				font: $font-list-item
-				border-bottom: 1px solid $seperator-color
 				&:hover
 					.task--destroy
 						display: block!important
@@ -121,4 +120,11 @@ body
 					&:active, &:hover, &:visited
 						color: $black
 					&:last-child
+						transition: all 500ms
 						padding: 0 0 0 15px
+#madeByText
+	position: absolute
+	top: 95%
+	left: 5px
+	color: #beaaaa
+	font-family: 'Montserrat'
