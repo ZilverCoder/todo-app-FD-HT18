@@ -6,14 +6,13 @@
 		<link rel="stylesheet" href="../public/compiled/css/style.css">
     </head>
     <body>
-		<h2 class="todo-title">todo;</h2>
+		<h1 class="todo-title">todos</h1>
 		<div class="todo-list--container">
 			<div class="todo--list--input">
 				<input class="input--newItem" type="text" data-bind="value: taskValue, enterKey: addTask" placeholder="What needs to be done?" autofocus>
 			</div>
 			<div class="todo-list--list">
-				<ul>
-					<!--ko foreach: filteredTaskList-->
+				<ul data-bind="foreach: filteredTaskList">
 					<li>
 						<div class="list--task">
 							<input class="task--toggle" type="checkbox" data-bind="checked: completed, attr: { id: 'task' + $index() }">
@@ -21,7 +20,6 @@
 							<button class="task--destroy" data-bind="click: $root.removeTask"></button>
 						</div>
 					</li>
-					<!--/ko-->
 				</ul>
 			</div>
 			<div class="todo-list--panel">
@@ -30,7 +28,7 @@
 					<a href="#All" data-bind="click: changeToAll">All</a>
 					<a href="#Active" data-bind="click: changeToActive">Active</a>
 					<a href="#Completed" data-bind="click: changeToCompleted">Completed</a>
-					<a href="#Clear" data-bind="click: , visible: completedTasks">Clear completed</a>
+					<a href="#Clear" data-bind="click: clearCompletedTasks, visible: completedTasks">Clear completed</a>
 				</div>
 			</div>
 		</div>

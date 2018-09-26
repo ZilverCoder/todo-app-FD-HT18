@@ -45,6 +45,14 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                 self.taskList.push(new Task(self.taskValue(), false));
                 self.taskValue('');
             }).bind(this);
+            self.removeTask = (function (task) {
+                self.taskList.remove(task);
+            }).bind(this);
+            self.clearCompletedTasks = (function () {
+                self.taskList.remove(function (task) {
+                    return task.completed();
+                });
+            }).bind(this);
             self.remainingTasks = ko.computed(function () {
                 return self.taskList().filter(function (task) {
                     return !task.completed();
