@@ -33,7 +33,7 @@ class TodoApp {
 		const enter_key:number = 13;
 		function keyhandlerBindingFactory(keyCode: number) {
 			return {
-				init: function (element: any, valueAccessor: any, allBindingsAccessor: any, data: any, bindingContext: any) {
+				init: function (element: HTMLElement, valueAccessor: any, allBindingsAccessor: any, data: any, bindingContext: any) {
 					let wrappedHandler: any;
 					let newValueAccessor: any;
 					// wrap the handler with a check for the enter key
