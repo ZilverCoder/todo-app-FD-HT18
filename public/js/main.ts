@@ -17,8 +17,10 @@ class TodoApp {
 	taskList: KnockoutObservableArray<object>
 	//Functions
 	addTask: KnockoutComputed<string>
+	removeTask: KnockoutComputed<boolean>
 	remainingTasks: KnockoutComputed<string>
 	completedTasks: KnockoutComputed<boolean>
+	clearCompletedTasks: KnockoutComputed<boolean>
 	//Filters
 	filterMode: KnockoutObservable<string>
 	filteredTaskList: KnockoutComputed<object>
@@ -28,7 +30,7 @@ class TodoApp {
 
     constructor() {
 		let self = this;
-		let ENTER_KEY = 13;
+		const enter_key:number = 13;
 		function keyhandlerBindingFactory(keyCode: number) {
 			return {
 				init: function (element: any, valueAccessor: any, allBindingsAccessor: any, data: any, bindingContext: any) {
@@ -51,13 +53,21 @@ class TodoApp {
 				}
 			};
 		}
-		ko.bindingHandlers.enterKey = keyhandlerBindingFactory(ENTER_KEY);
+		ko.bindingHandlers.enterKey = keyhandlerBindingFactory(enter_key);
 		//#region Functions
 			self.taskValue = ko.observable();
 			self.taskList = ko.observableArray();
 			self.addTask = (() => {
 				self.taskList.push(new Task(self.taskValue(), false));
 				self.taskValue('');
+			}).bind(this);
+			self.removeTask = ((task) => {
+				self.taskList.remove(task);
+			}).bind(this);
+			self.clearCompletedTasks = (() => {
+				self.taskList.remove((task) => {
+					return task.completed();
+				});
 			}).bind(this);
 			self.remainingTasks = ko.computed(() => {
 				return self.taskList().filter(function (task: Task) {
