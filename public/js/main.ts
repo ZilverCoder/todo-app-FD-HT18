@@ -58,7 +58,8 @@ class TodoApp {
 			self.taskValue = ko.observable();
 			self.taskList = ko.observableArray();
 			self.addTask = (() => {
-				self.taskList.push(new Task(self.taskValue(), false));
+				if(self.taskValue().length > 0)
+					self.taskList.push(new Task(self.taskValue(), false));
 				self.taskValue('');
 			}).bind(this);
 			self.removeTask = ((task: Task) => {
