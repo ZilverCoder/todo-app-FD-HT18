@@ -14,7 +14,7 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
     var TodoApp = /** @class */ (function () {
         function TodoApp() {
             var self = this;
-            var ENTER_KEY = 13;
+            var enter_key = 13;
             function keyhandlerBindingFactory(keyCode) {
                 return {
                     init: function (element, valueAccessor, allBindingsAccessor, data, bindingContext) {
@@ -37,12 +37,13 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                     }
                 };
             }
-            ko.bindingHandlers.enterKey = keyhandlerBindingFactory(ENTER_KEY);
+            ko.bindingHandlers.enterKey = keyhandlerBindingFactory(enter_key);
             //#region Functions
             self.taskValue = ko.observable();
             self.taskList = ko.observableArray();
             self.addTask = (function () {
-                self.taskList.push(new Task(self.taskValue(), false));
+                if (self.taskValue().length > 0)
+                    self.taskList.push(new Task(self.taskValue(), false));
                 self.taskValue('');
             }).bind(this);
             self.removeTask = (function (task) {

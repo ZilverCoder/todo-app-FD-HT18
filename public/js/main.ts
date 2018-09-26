@@ -61,11 +61,11 @@ class TodoApp {
 				self.taskList.push(new Task(self.taskValue(), false));
 				self.taskValue('');
 			}).bind(this);
-			self.removeTask = ((task) => {
+			self.removeTask = ((task: Task) => {
 				self.taskList.remove(task);
 			}).bind(this);
 			self.clearCompletedTasks = (() => {
-				self.taskList.remove((task) => {
+				self.taskList.remove((task: Task) => {
 					return task.completed();
 				});
 			}).bind(this);
