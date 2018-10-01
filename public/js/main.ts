@@ -92,9 +92,7 @@ class TodoApp {
 				return self.remainingTasksCount() + " items left";
 			}, this);
 			self.completedTasks = ko.computed(() => {
-				return self.taskList().filter(function (task: Task){
-					return task.completed();
-				}).length > 0;
+				return self.taskList().length - this.remainingTasksCount() > 0;
 			}, this);
 		//#endregion
 		//#region Filter Functions
