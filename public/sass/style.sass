@@ -26,11 +26,18 @@ body
 	border-radius: 5px
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1)
 	.todo--list--input
+		display: inline-block
+		button
+			text-align: center
+			border: 0
+			background: none
+			font-size: 30px
+			color: #737373
 		.input
+			&--toggleAll
 			&--newItem
-				display: block
 				font: $font-list-item
-				width: 500px
+				width: 450px
 				height: 30px
 				border: none
 				border-bottom: 1px solid $seperator-color

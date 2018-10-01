@@ -9,7 +9,7 @@
 		<h1 class="todo-title">todos</h1>
 		<div class="todo-list--container">
 			<div class="todo--list--input">
-				<button data-bind="click: toggleAllCompleted">\/</button>
+				<button data-bind="click: toggleAllCompleted, visible: taskList().length">▾</button>
 				<input class="input--newItem" type="text" data-bind="value: taskValue, enterKey: addTask" placeholder="What needs to be done?" autofocus>
 			</div>
 			<div class="todo-list--list">
