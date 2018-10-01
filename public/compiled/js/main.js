@@ -72,9 +72,7 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                 return self.remainingTasksCount()  + " items left";
             }, this);
             self.completedTasks = ko.computed(function () {
-                return self.taskList().filter(function (task) {
-                    return task.completed();
-                }).length > 0;
+                return self.taskList().length - self.remainingTasksCount() > 0;
             }, this);
             //#endregion
             //#region Filter Functions
