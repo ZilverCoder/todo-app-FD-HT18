@@ -17,7 +17,9 @@ class TodoApp {
 	taskList: KnockoutObservableArray<object>
 	//Functions
 	addTask: KnockoutComputed<string>
+	toggleAllCompleted: KnockoutComputed<boolean>
 	removeTask: KnockoutComputed<boolean>
+	remainingTasksCount: KnockoutComputed<number>
 	remainingTasks: KnockoutComputed<string>
 	completedTasks: KnockoutComputed<boolean>
 	clearCompletedTasks: KnockoutComputed<boolean>
@@ -62,6 +64,17 @@ class TodoApp {
 					self.taskList.push(new Task(self.taskValue(), false));
 				self.taskValue('');
 			}).bind(this);
+			self.toggleAllCompleted = (() => {
+				let toogleCompleted:boolean = false;
+
+				if(self.remainingTasksCount() > 0){
+					toogleCompleted = true;
+				}
+
+				ko.utils.arrayForEach(self.taskList(), (task:Task) => {
+					task.completed(toogleCompleted);
+				});
+			}).bind(this);
 			self.removeTask = ((task: Task) => {
 				self.taskList.remove(task);
 			}).bind(this);
@@ -70,10 +83,13 @@ class TodoApp {
 					return task.completed();
 				});
 			}).bind(this);
-			self.remainingTasks = ko.computed(() => {
+			self.remainingTasksCount = ko.computed(() => {
 				return self.taskList().filter(function (task: Task) {
 					return !task.completed();
-				}).length + " items left";
+				}).length;
+			});
+			self.remainingTasks = ko.computed(() => {
+				return self.remainingTasksCount() + " items left";
 			}, this);
 			self.completedTasks = ko.computed(() => {
 				return self.taskList().filter(function (task: Task){

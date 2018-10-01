@@ -46,6 +46,15 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                     self.taskList.push(new Task(self.taskValue(), false));
                 self.taskValue('');
             }).bind(this);
+            self.toggleAllCompleted = (function() {
+				var toogleCompleted = false;
+				if(self.remainingTasksCount() > 0){
+					toogleCompleted = true;
+				}
+				ko.utils.arrayForEach(self.taskList(), function(task) {
+					task.completed(toogleCompleted);
+				});
+			}).bind(this);
             self.removeTask = (function (task) {
                 self.taskList.remove(task);
             }).bind(this);
@@ -54,10 +63,13 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                     return task.completed();
                 });
             }).bind(this);
-            self.remainingTasks = ko.computed(function () {
+            self.remainingTasksCount = ko.computed(function() {
                 return self.taskList().filter(function (task) {
                     return !task.completed();
-                }).length + " items left";
+                }).length;
+            }, this);
+            self.remainingTasks = ko.computed(function () {
+                return self.remainingTasksCount()  + " items left";
             }, this);
             self.completedTasks = ko.computed(function () {
                 return self.taskList().filter(function (task) {
