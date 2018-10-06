@@ -12,9 +12,42 @@ class Task {
 	}
 }
 
+class Lang {
+	items_left: KnockoutObservable<string>
+	filter_all: KnockoutObservable<string>
+	filter_active: KnockoutObservable<string>
+	filter_completed: KnockoutObservable<string>
+	clearCompleted: KnockoutObservable<string>
+	whatNeedsDone: KnockoutObservable<string>
+	todos: KnockoutObservable<string>
+
+	constructor(items_left: string, filter_all: string, filter_active: string, 
+				filter_completed: string, clearCompleted: string, whatNeedsDone: string, todos: string){
+		this.items_left = ko.observable(items_left);
+		this.filter_all = ko.observable(filter_all);
+		this.filter_active = ko.observable(filter_active);
+		this.filter_completed = ko.observable(filter_completed);
+		this.clearCompleted = ko.observable(clearCompleted);
+		this.whatNeedsDone = ko.observable(whatNeedsDone);
+		this.todos = ko.observable(todos);
+	}
+	lang() {
+		return this.items_left, this.filter_all, this.filter_active, 
+				this.filter_completed, this.clearCompleted, this.whatNeedsDone, this.todos;
+	}
+}
+
 class TodoApp {
 	taskValue: KnockoutObservable<string>
-	taskList: KnockoutObservableArray<object>
+	taskList: KnockoutObservableArray<Task>
+	//Languages
+	currentLang: KnockoutObservable<string>
+	langObj: KnockoutComputed<Lang>
+	changeLangToEng: () => void
+	changeLangToKor: () => void
+	changeLangToJap: () => void
+	engLang: Lang
+	koreanLang: Lang
 	//Functions
 	addTask: KnockoutComputed<string>
 	toggleAllCompleted: KnockoutComputed<boolean>
@@ -56,6 +89,30 @@ class TodoApp {
 			};
 		}
 		ko.bindingHandlers.enterKey = keyhandlerBindingFactory(enter_key);
+		//#region Language Switcher
+			self.currentLang = ko.observable('eng');
+			self.langObj = ko.computed(() => {
+				switch(self.currentLang()){
+					case 'eng':
+						return new Lang("items left", "all", "active", "completed", "Clear completed", "what be needing doneing", "todos");
+					case 'kor':
+						return new Lang("남은 항목", "모든", "유효한", "완료된", "명확한 완료","해야 할 일", "할것");
+					case 'jap':
+						return new Lang("左のアイテム", "すべて", "アクティブ", "完了", "クリア済み", "実行する必要があるもの", "リスト");
+					default:
+						return new Lang("items left", "all", "active", "completed", "Clear completed","what be needing doneing", "todos");
+				}
+			}, this);
+			self.changeLangToEng = () => {
+				self.currentLang('eng');
+			}
+			self.changeLangToKor = () => {
+				self.currentLang('kor');
+			}
+			self.changeLangToJap = () => {
+				self.currentLang('jap');
+			}
+		//#endregion
 		//#region Functions
 			self.taskValue = ko.observable();
 			self.taskList = ko.observableArray();
@@ -89,7 +146,7 @@ class TodoApp {
 				}).length;
 			});
 			self.remainingTasks = ko.computed(() => {
-				return self.remainingTasksCount() + " items left";
+				return self.remainingTasksCount() + " " + ko.unwrap(self.langObj().items_left);
 			}, this);
 			self.completedTasks = ko.computed(() => {
 				return self.taskList().length - this.remainingTasksCount() > 0;

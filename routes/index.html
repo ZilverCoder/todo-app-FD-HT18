@@ -6,10 +6,18 @@
 		<link rel="stylesheet" href="../public/compiled/css/style.css">
     </head>
     <body>
+		<h1 class="todo--title" data-bind="text: langObj().todos"></h1>
+		<div class="lang--switcher-container">
+			<div class="lang--switcher">
+				<button class="lang--option" data-bind="click: changeLangToEng">ENG</button>
+				<button class="lang--option" data-bind="click: changeLangToKor">KO</button>
+				<button class="lang--option" data-bind="click: changeLangToJap">JAP</button>
+			</div>
+		</div>
 		<div class="todo-list--container">
-			<div class="todo--list--input">
+			<div class="todo-list--input">
 				<button data-bind="click: toggleAllCompleted, visible: taskList().length">▾</button>
-				<input class="input--newItem" type="text" data-bind="value: taskValue, enterKey: addTask, style: { 'margin-left': taskList().length > 0 ? '0px' : '30px'}" placeholder="What needs to be done?" autofocus>
+				<input class="input--newItem" type="text" data-bind="value: taskValue, enterKey: addTask, style: { 'margin-left': taskList().length > 0 ? '0px' : '30px'}, attr: { placeholder: langObj().whatNeedsDone }" autofocus>
 			</div>
 			<div class="todo-list--list">
 				<ul data-bind="foreach: filteredTaskList">
@@ -25,10 +33,10 @@
 			<div class="todo-list--panel">
 				<p class="panel--item-count" data-bind="text: remainingTasks"></p>
 				<div class="panel--list-modes">
-					<a href="#All" data-bind="click: changeToAll">All</a>
-					<a href="#Active" data-bind="click: changeToActive">Active</a>
-					<a href="#Completed" data-bind="click: changeToCompleted">Completed</a>
-					<a href="#Clear" data-bind="click: clearCompletedTasks, visible: completedTasks">Clear completed</a>
+					<a href="#All" data-bind="click: changeToAll, text: langObj().filter_all"></a>
+					<a href="#Active" data-bind="click: changeToActive, text: langObj().filter_active"></a>
+					<a href="#Completed" data-bind="click: changeToCompleted, text: langObj().filter_completed"></a>
+					<a href="#Clear" data-bind="click: clearCompletedTasks, text: langObj().filter_completed,visible: completedTasks"></a>
 				</div>
 			</div>
 		</div>

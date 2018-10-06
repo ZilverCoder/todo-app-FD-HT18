@@ -11,8 +11,25 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
         };
         return Task;
     }());
+    var Lang = /** @class */ (function () {
+        function Lang(items_left, filter_all, filter_active, filter_completed, clearCompleted, whatNeedsDone, todos) {
+            this.items_left = ko.observable(items_left);
+            this.filter_all = ko.observable(filter_all);
+            this.filter_active = ko.observable(filter_active);
+            this.filter_completed = ko.observable(filter_completed);
+            this.clearCompleted = ko.observable(clearCompleted);
+            this.whatNeedsDone = ko.observable(whatNeedsDone);
+            this.todos = ko.observable(todos);
+        }
+        Lang.prototype.lang = function () {
+            return this.items_left, this.filter_all, this.filter_active,
+                this.filter_completed, this.clearCompleted, this.whatNeedsDone, this.todos;
+        };
+        return Lang;
+    }());
     var TodoApp = /** @class */ (function () {
         function TodoApp() {
+            var _this = this;
             var self = this;
             var enter_key = 13;
             function keyhandlerBindingFactory(keyCode) {
@@ -38,6 +55,30 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                 };
             }
             ko.bindingHandlers.enterKey = keyhandlerBindingFactory(enter_key);
+            //#region Language Switcher
+            self.currentLang = ko.observable('eng');
+            self.langObj = ko.computed(function () {
+                switch (self.currentLang()) {
+                    case 'eng':
+                        return new Lang("items left", "all", "active", "completed", "Clear completed", "what be needing doneing", "todos");
+                    case 'kor':
+                        return new Lang("남은 항목", "모든", "유효한", "완료된", "명확한 완료", "해야 할 일", "할것");
+                    case 'jap':
+                        return new Lang("左のアイテム", "すべて", "アクティブ", "完了", "クリア済み", "実行する必要があるもの", "リスト");
+                    default:
+                        return new Lang("items left", "all", "active", "completed", "Clear completed", "what be needing doneing", "todos");
+                }
+            }, this);
+            self.changeLangToEng = function () {
+                self.currentLang('eng');
+            };
+            self.changeLangToKor = function () {
+                self.currentLang('kor');
+            };
+            self.changeLangToJap = function () {
+                self.currentLang('jap');
+            };
+            //#endregion
             //#region Functions
             self.taskValue = ko.observable();
             self.taskList = ko.observableArray();
@@ -46,15 +87,15 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                     self.taskList.push(new Task(self.taskValue(), false));
                 self.taskValue('');
             }).bind(this);
-            self.toggleAllCompleted = (function() {
-				var toogleCompleted = false;
-				if(self.remainingTasksCount() > 0){
-					toogleCompleted = true;
-				}
-				ko.utils.arrayForEach(self.taskList(), function(task) {
-					task.completed(toogleCompleted);
-				});
-			}).bind(this);
+            self.toggleAllCompleted = (function () {
+                var toogleCompleted = false;
+                if (self.remainingTasksCount() > 0) {
+                    toogleCompleted = true;
+                }
+                ko.utils.arrayForEach(self.taskList(), function (task) {
+                    task.completed(toogleCompleted);
+                });
+            }).bind(this);
             self.removeTask = (function (task) {
                 self.taskList.remove(task);
             }).bind(this);
@@ -63,16 +104,16 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                     return task.completed();
                 });
             }).bind(this);
-            self.remainingTasksCount = ko.computed(function() {
+            self.remainingTasksCount = ko.computed(function () {
                 return self.taskList().filter(function (task) {
                     return !task.completed();
                 }).length;
-            }, this);
+            });
             self.remainingTasks = ko.computed(function () {
-                return self.remainingTasksCount()  + " items left";
+                return self.remainingTasksCount() + " " + ko.unwrap(self.langObj().items_left);
             }, this);
             self.completedTasks = ko.computed(function () {
-                return self.taskList().length - self.remainingTasksCount() > 0;
+                return self.taskList().length - _this.remainingTasksCount() > 0;
             }, this);
             //#endregion
             //#region Filter Functions
