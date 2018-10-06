@@ -6,18 +6,18 @@
 		<link rel="stylesheet" href="../public/compiled/css/style.css">
     </head>
     <body>
-		<h1 class="todo-title">todos</h1>
+		<h1 class="todo--title">todos</h1>
 		<div class="todo-list--container">
 			<div class="todo--list--input">
 				<button data-bind="click: toggleAllCompleted, visible: taskList().length">▾</button>
-				<input class="input--newItem" type="text" data-bind="value: taskValue, enterKey: addTask" placeholder="What needs to be done?" autofocus>
+				<input class="input--newItem" type="text" data-bind="value: taskValue, enterKey: addTask, style: { 'margin-left': taskList().length > 0 ? '0px' : '30px'}" placeholder="What needs to be done?" autofocus>
 			</div>
 			<div class="todo-list--list">
 				<ul data-bind="foreach: filteredTaskList">
 					<li>
 						<div class="list--task">
 							<input class="task--toggle" type="checkbox" data-bind="checked: completed, attr: { id: 'task' + $index() }">
-							<label class="task--text completed" data-bind="text: value, attr: { for: 'task' + $index() }"></label>
+							<label class="task--text" data-bind="text: value, attr: { for: 'task' + $index() }, css: { completed: completed }"></label>
 							<button class="task--destroy" data-bind="click: $root.removeTask"></button>
 						</div>
 					</li>
