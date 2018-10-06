@@ -56,9 +56,10 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
             }
             ko.bindingHandlers.enterKey = keyhandlerBindingFactory(enter_key);
             //#region Language Switcher
-            self.currentLang = ko.observable('eng');
-            self.langObj = ko.computed(function () {
-                switch (self.currentLang()) {
+            self.langBoxVisible = ko.observable(false);
+            self.currentLangOption = ko.observable('eng');
+            self.currentLang = ko.computed(function () {
+                switch (self.currentLangOption()) {
                     case 'eng':
                         return new Lang("items left", "all", "active", "completed", "Clear completed", "what be needing doneing", "todos");
                     case 'kor':
@@ -70,14 +71,17 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                 }
             }, this);
             self.changeLangToEng = function () {
-                self.currentLang('eng');
+                self.currentLangOption('eng');
             };
             self.changeLangToKor = function () {
-                self.currentLang('kor');
+                self.currentLangOption('kor');
             };
             self.changeLangToJap = function () {
-                self.currentLang('jap');
+                self.currentLangOption('jap');
             };
+            self.toggleLangBox = (function () {
+                return self.langBoxVisible() == true ? self.langBoxVisible(false) : self.langBoxVisible(true);
+            }).bind(this);
             //#endregion
             //#region Functions
             self.taskValue = ko.observable();
@@ -110,7 +114,7 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                 }).length;
             });
             self.remainingTasks = ko.computed(function () {
-                return self.remainingTasksCount() + " " + ko.unwrap(self.langObj().items_left);
+                return self.remainingTasksCount() + " " + ko.unwrap(self.currentLang().items_left);
             }, this);
             self.completedTasks = ko.computed(function () {
                 return self.taskList().length - _this.remainingTasksCount() > 0;

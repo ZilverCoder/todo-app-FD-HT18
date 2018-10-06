@@ -41,13 +41,15 @@ class TodoApp {
 	taskValue: KnockoutObservable<string>
 	taskList: KnockoutObservableArray<Task>
 	//Languages
-	currentLang: KnockoutObservable<string>
-	langObj: KnockoutComputed<Lang>
+	currentLangOption: KnockoutObservable<string>
+	currentLang: KnockoutComputed<Lang>
 	changeLangToEng: () => void
 	changeLangToKor: () => void
 	changeLangToJap: () => void
 	engLang: Lang
 	koreanLang: Lang
+	langBoxVisible: KnockoutObservable<boolean>
+	toggleLangBox: () => void
 	//Functions
 	addTask: KnockoutComputed<string>
 	toggleAllCompleted: KnockoutComputed<boolean>
@@ -90,9 +92,10 @@ class TodoApp {
 		}
 		ko.bindingHandlers.enterKey = keyhandlerBindingFactory(enter_key);
 		//#region Language Switcher
-			self.currentLang = ko.observable('eng');
-			self.langObj = ko.computed(() => {
-				switch(self.currentLang()){
+			self.langBoxVisible = ko.observable(false);
+			self.currentLangOption = ko.observable('eng');
+			self.currentLang = ko.computed(() => {
+				switch(self.currentLangOption()){
 					case 'eng':
 						return new Lang("items left", "all", "active", "completed", "Clear completed", "what be needing doneing", "todos");
 					case 'kor':
@@ -104,14 +107,17 @@ class TodoApp {
 				}
 			}, this);
 			self.changeLangToEng = () => {
-				self.currentLang('eng');
-			}
+				self.currentLangOption('eng');
+			};
 			self.changeLangToKor = () => {
-				self.currentLang('kor');
-			}
+				self.currentLangOption('kor');
+			};
 			self.changeLangToJap = () => {
-				self.currentLang('jap');
-			}
+				self.currentLangOption('jap');
+			};
+			self.toggleLangBox = (() => {
+				return self.langBoxVisible() == true ? self.langBoxVisible(false) : self.langBoxVisible(true);
+			}).bind(this);
 		//#endregion
 		//#region Functions
 			self.taskValue = ko.observable();
@@ -146,7 +152,7 @@ class TodoApp {
 				}).length;
 			});
 			self.remainingTasks = ko.computed(() => {
-				return self.remainingTasksCount() + " " + ko.unwrap(self.langObj().items_left);
+				return self.remainingTasksCount() + " " + ko.unwrap(self.currentLang().items_left);
 			}, this);
 			self.completedTasks = ko.computed(() => {
 				return self.taskList().length - this.remainingTasksCount() > 0;
