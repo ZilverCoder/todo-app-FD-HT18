@@ -4,10 +4,10 @@ body
 	background: $bg-color
 	color: $white
 
-.todo-title
+.todo--title
 	display: flex
 	font: $font-title
-	color: rgba(175, 47, 47, 0.15)
+	color: $title-madeBy-color
 	align-content: center
 	justify-content: center
 	text-align: left
@@ -21,7 +21,7 @@ body
 	flex-direction: column
 	margin: auto
 	font: $font-standard
-	background: $white
+	background: $todo-list--container-bg
 	color: $black
 	border-radius: 5px
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1)
@@ -32,7 +32,7 @@ body
 			border: 0
 			background: none
 			font-size: 30px
-			color: #737373
+			color: $seperator-color
 		.input
 			&--toggleAll
 			&--newItem
@@ -42,6 +42,7 @@ body
 				border: none
 				border-bottom: 1px solid $seperator-color
 				box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03)
+				background: $todo-list--container-bg
 				input
 					&:input-placeholder
 						font-style: italic
@@ -95,6 +96,9 @@ body
 								display: block
 							&:after
 								content: '×'
+					.completed
+						text-decoration: line-through
+						font-style: italic
 					.task--toggle
 						opacity: 0
 					.task--toggle + label
@@ -133,5 +137,5 @@ body
 	position: absolute
 	top: 95%
 	left: 5px
-	color: #beaaaa
+	color: $title-madeBy-color
 	font-family: 'Montserrat'
