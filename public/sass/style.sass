@@ -21,11 +21,15 @@ button
 	margin: auto
 	height: 0px
 	@include langContainerHeight
-	z-index: -10
+	z-index: -100
 	opacity: 0
+	button
+		display: none
 .visible
 	height: 30px
 	opacity: 1
+	button
+		display: block
 
 .todo-list--container
 	width: 500px
@@ -37,7 +41,7 @@ button
 	color: $black
 	border-radius: 5px
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1)
-	z-index: 100
+	z-index: 200
 	.todo-list--input
 		display: inline-block
 		button
@@ -158,3 +162,12 @@ button
 	left: 5px
 	color: $title-madeBy-color
 	font-family: 'Montserrat'
+
+@media screen and (max-width: 992px)
+	.todo-list--container
+		width: 90vw
+		.todo-list--input
+			.input--newItem
+				width: 70vw
+		.task--destroy
+			display: block!important
