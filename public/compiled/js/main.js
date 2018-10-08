@@ -31,30 +31,19 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
         function TodoApp() {
             var _this = this;
             var self = this;
-            var enter_key = 13;
-            function keyhandlerBindingFactory(keyCode) {
-                return {
-                    init: function (element, valueAccessor, allBindingsAccessor, data, bindingContext) {
-                        var wrappedHandler;
-                        var newValueAccessor;
-                        // wrap the handler with a check for the enter key
-                        wrappedHandler = function (data, event) {
-                            if (event.keyCode === keyCode) {
-                                valueAccessor().call(this, data, event);
-                            }
-                        };
-                        // create a valueAccessor with the options that we would want to pass to the event binding
-                        newValueAccessor = function () {
-                            return {
-                                keyup: wrappedHandler
-                            };
-                        };
-                        // call the real event binding's init function
-                        ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data, bindingContext);
-                    }
-                };
-            }
-            ko.bindingHandlers.enterKey = keyhandlerBindingFactory(enter_key);
+            //Custom ko binding
+            ko.bindingHandlers.enterKey = {
+                init: function (element, valueAccessor, allBindingsAccessor, data, bindingContext) {
+                    var wrappedHandler = function (data, event) {
+                        if (event.keyCode === 13)
+                            valueAccessor().call(_this, data, event);
+                    };
+                    var newValueAccessor = function () {
+                        return { keyup: wrappedHandler };
+                    };
+                    ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data, bindingContext);
+                }
+            };
             //#region Language Switcher
             self.langBoxVisible = ko.observable(false);
             self.currentLangOption = ko.observable('eng'); //Which language is standard
