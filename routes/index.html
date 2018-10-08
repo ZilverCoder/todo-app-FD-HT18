@@ -11,19 +11,11 @@
 		</script>
 	</head>
 	<body>
-		<h1 class="todo--title" data-bind="text: currentLang().todos"></h1>
-		<div class="lang-switcher--container" data-bind="css: { visible: langBoxVisible }">
-			<button class="lang--option" data-bind="click: function() { changeLang('eng') }">ENG</button>
-			<button class="lang--option" data-bind="click: function() { changeLang('swe') }">SWE</button>
-			<button class="lang--option" data-bind="click: function() { changeLang('ko') }">KO</button>
-			<button class="lang--option" data-bind="click: function() { changeLang('jap') }">JAP</button>
-			<button class="lang--option" data-bind="click: function() { changeLang('pol') }">POL</button>
-		</div>
+		<h1 class="todo--title">Todo</h1>
 		<div class="todo-list--container">
 			<div class="todo-list--input">
 				<button class="input--toggleAll" data-bind="click: toggleAllCompleted, visible: taskList().length">▾</button>
-				<input class="input--newItem" type="text" data-bind="value: taskValue, enterKey: addTask, style: { 'margin-left': taskList().length > 0 ? '0px' : '30px'}, attr: { placeholder: currentLang().whatNeedsDone }" autofocus>
-				<div class="input--langOption" data-bind="click: toggleLangBox"></div>
+				<input class="input--newItem" type="text" data-bind="value: taskValue, enterKey: addTask, style: { 'margin-left': taskList().length > 0 ? '0px' : '30px'}" placeholder="What needs to be done" autofocus>
 			</div>
 			<div class="todo-list--list">
 				<ul data-bind="foreach: filteredTaskList">
@@ -39,10 +31,10 @@
 			<div class="todo-list--panel">
 				<p class="panel--item-count" data-bind="text: remainingTasks"></p>
 				<div class="panel--list-modes">
-					<a href="#All" data-bind="click: function() { changeFilterMode('all') }, text: currentLang().filter_all"></a>
-					<a href="#Active" data-bind="click: function() { changeFilterMode('active') }, text: currentLang().filter_active"></a>
-					<a href="#Completed" data-bind="click: function() { changeFilterMode('done') }, text: currentLang().filter_completed"></a>
-					<a href="#Clear" data-bind="click: clearCompletedTasks, text: currentLang().clearCompleted,visible: completedTasks"></a>
+					<a href="#All" data-bind="click: function() { changeFilterMode('all') }">All</a>
+					<a href="#Active" data-bind="click: function() { changeFilterMode('active') }">Active</a>
+					<a href="#Completed" data-bind="click: function() { changeFilterMode('done') }">Completed</a>
+					<a href="#Clear" data-bind="click: clearCompletedTasks, visible: completedTasks">Clear completed</a>
 				</div>
 			</div>
 		</div>

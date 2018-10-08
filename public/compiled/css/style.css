@@ -19,33 +19,6 @@ button {
   padding-top: 40px;
   padding-bottom: 30px; }
 
-.lang-switcher--container {
-  display: -webkit-flex;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  font: 400 50px/18px "Montserrat", sans-serif;
-  margin: auto;
-  height: 0px;
-  -webkit-transition-property: inherit;
-  -webkit-transition-duration: 0.3s;
-  -webkit-transition-timing-function: ease-in-out;
-  transition-property: inherit;
-  transition-duration: 0.3s;
-  transition-timing-function: ease-in-out;
-  z-index: -100;
-  opacity: 0; }
-
-.lang-switcher--container button {
-  display: none; }
-
-.visible {
-  height: 30px;
-  opacity: 1; }
-
-.visible button {
-  display: block; }
-
 .todo-list--container {
   width: 500px;
   display: flex;
@@ -187,9 +160,7 @@ button {
   padding: 0 0 0 15px; }
 
 #madeByText {
-  position: absolute;
-  top: 95%;
-  left: 5px;
+  text-align: center;
   color: #5a818c;
   font-family: 'Montserrat'; }
 

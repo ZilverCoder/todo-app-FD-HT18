@@ -14,23 +14,7 @@ button
 	margin: auto
 	padding-top: 40px
 	padding-bottom: 30px
-
-.lang-switcher--container
-	@include flexCenter
-	font: $font-title
-	margin: auto
-	height: 0px
-	@include langContainerHeight
-	z-index: -100
-	opacity: 0
-	button
-		display: none
-.visible
-	height: 30px
-	opacity: 1
-	button
-		display: block
-
+	
 .todo-list--container
 	width: 500px
 	display: flex
@@ -157,9 +141,7 @@ button
 						transition: all 500ms
 						padding: 0 0 0 15px
 #madeByText
-	position: absolute
-	top: 95%
-	left: 5px
+	text-align: center
 	color: $title-madeBy-color
 	font-family: 'Montserrat'
 
