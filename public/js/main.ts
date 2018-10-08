@@ -76,7 +76,7 @@ class TodoApp {
 				}).length;
 			});
 			self.remainingTasks = ko.computed(() => {
-				return self.remainingTasksCount() + " " + ko.unwrap(self.currentLang().items_left);
+				return self.remainingTasksCount() == 1 ? self.remainingTasksCount() + "\titem left" : self.remainingTasksCount() + " items left";
 			}, this);
 			self.completedTasks = ko.computed(() => {
 				return self.taskList().length - this.remainingTasksCount() > 0;
