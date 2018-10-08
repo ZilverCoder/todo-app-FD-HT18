@@ -46,11 +46,8 @@ class TodoApp {
 	changeLangToEng: () => void
 	changeLangToKor: () => void
 	changeLangToJap: () => void
-<<<<<<< HEAD
 	changeLangToPol: () => void
-=======
 	changeLangToSwe: () => void
->>>>>>> origin/adding-new-behaviour
 	engLang: Lang
 	koreanLang: Lang
 	langBoxVisible: KnockoutObservable<boolean>
@@ -107,13 +104,10 @@ class TodoApp {
 						return new Lang("남은 항목", "모든", "유효한", "완료된", "명확한 완료","해야 할 일", "할것");
 					case 'jap':
 						return new Lang("左のアイテム", "すべて", "アクティブ", "完了", "クリア済み", "実行する必要があるもの", "リスト");
-<<<<<<< HEAD
 					case 'pol':
 						return new Lang("rzeczy w lewo", "wszystko", "obecny", "zakończony", "Czyszczenie zakończone", "Co musi być zrobione", "do zrobienia");
-=======
 					case 'swe':
 						return new Lang("kvar att göra", "allt", "aktiva", "klara", "Töm klara", "vad ska göras", "att göra");
->>>>>>> origin/adding-new-behaviour
 					default:
 						return new Lang("items left", "all", "active", "completed", "Clear completed","what be needing doneing", "todos");
 				}
@@ -127,13 +121,11 @@ class TodoApp {
 			self.changeLangToJap = () => {
 				self.currentLangOption('jap');
 			};
-<<<<<<< HEAD
 			self.changeLangToPol = () => {
 				self.currentLangOption('pol');
-=======
+			};
 			self.changeLangToSwe = () => {
 				self.currentLangOption('swe');
->>>>>>> origin/adding-new-behaviour
 			};
 			self.toggleLangBox = (() => {
 				return self.langBoxVisible() == true ? self.langBoxVisible(false) : self.langBoxVisible(true);
