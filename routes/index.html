@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
+	<head>
+		<meta charset="UTF-8" />
 		<title>Hello Knockout!</title>
 		<link rel="stylesheet" href="../public/compiled/css/style.css">
-    </head>
-    <body>
+		<script src="../public/compiled/js/require-config.js" defer></script>
+		<script src="../node_modules/requirejs/require.js"></script>
+		<script>
+			require(["../public/compiled/js/main"]);
+		</script>
+	</head>
+	<body>
 		<h1 class="todo--title" data-bind="text: currentLang().todos"></h1>
 		<div class="lang-switcher--container" data-bind="css: { visible: langBoxVisible }">
 			<button class="lang--option" data-bind="click: changeLangToEng">ENG</button>
@@ -42,11 +47,6 @@
 			</div>
 		</div>
 
-		<script src="../node_modules/requirejs/require.js"></script>
-		<script src="../public/compiled/js/require-config.js"></script>
-		<script>
-			require(["../public/compiled/js/main"]);
-		</script>
-	<p id="madeByText">Todo App Made by ZilverCoder and Chibi</p>
-    </body>
+		<p id="madeByText">Todo App Made by ZilverCoder and Chibi</p>
+  </body>
 </html>
