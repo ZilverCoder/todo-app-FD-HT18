@@ -46,6 +46,7 @@ class TodoApp {
 	changeLangToEng: () => void
 	changeLangToKor: () => void
 	changeLangToJap: () => void
+	changeLangToSwe: () => void
 	engLang: Lang
 	koreanLang: Lang
 	langBoxVisible: KnockoutObservable<boolean>
@@ -116,6 +117,9 @@ class TodoApp {
 			};
 			self.changeLangToJap = () => {
 				self.currentLangOption('jap');
+			};
+			self.changeLangToSwe = () => {
+				self.currentLangOption('swe');
 			};
 			self.toggleLangBox = (() => {
 				return self.langBoxVisible() == true ? self.langBoxVisible(false) : self.langBoxVisible(true);
