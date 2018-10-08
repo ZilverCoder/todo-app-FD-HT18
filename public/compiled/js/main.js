@@ -57,37 +57,25 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
             ko.bindingHandlers.enterKey = keyhandlerBindingFactory(enter_key);
             //#region Language Switcher
             self.langBoxVisible = ko.observable(false);
-            self.currentLangOption = ko.observable('eng');
+            self.currentLangOption = ko.observable('eng'); //Which language is standard
             self.currentLang = ko.computed(function () {
                 switch (self.currentLangOption()) {
                     case 'eng':
                         return new Lang("items left", "all", "active", "completed", "Clear completed", "what be needing doneing", "todos");
-                    case 'kor':
+                    case 'ko':
                         return new Lang("남은 항목", "모든", "유효한", "완료된", "명확한 완료", "해야 할 일", "할것");
                     case 'jap':
                         return new Lang("左のアイテム", "すべて", "アクティブ", "完了", "クリア済み", "実行する必要があるもの", "リスト");
                     case 'pol':
-                        return new Lang("rzeczy w lewo", "wszystko", "obecny", "zakończony", "Czyszczenie zakończone", "Co musi być zrobione", "do zrobienia");
+                        return new Lang("Rzeczy w lewo", "Wszystko", "Obecny", "Zakończony", "Czyszczenie zakończone", "Co musi być zrobione", "Do zrobienia");
                     case 'swe':
                         return new Lang("kvar att göra", "allt", "aktiva", "klara", "Töm klara", "vad ska göras", "att göra");
                     default:
                         return new Lang("items left", "all", "active", "completed", "Clear completed", "what be needing doneing", "todos");
                 }
             }, this);
-            self.changeLangToEng = function () {
-                self.currentLangOption('eng');
-            };
-            self.changeLangToKor = function () {
-                self.currentLangOption('kor');
-            };
-            self.changeLangToJap = function () {
-                self.currentLangOption('jap');
-            };
-            self.changeLangToPol = function () {
-                self.currentLangOption('pol');
-            };
-            self.changeLangToSwe = function () {
-                self.currentLangOption('swe');
+            self.changeLang = function (lang) {
+                self.currentLangOption(lang);
             };
             self.toggleLangBox = (function () {
                 return self.langBoxVisible() == true ? self.langBoxVisible(false) : self.langBoxVisible(true);
@@ -134,7 +122,7 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
             self.filterMode = ko.observable('all');
             self.filteredTaskList = ko.computed(function () {
                 switch (self.filterMode()) {
-                    case 'todo':
+                    case 'active':
                         return self.taskList().filter(function (task) {
                             return !task.completed();
                         });
@@ -146,14 +134,8 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                         return self.taskList();
                 }
             }, this);
-            self.changeToAll = function () {
-                self.filterMode('all');
-            };
-            self.changeToActive = function () {
-                self.filterMode('todo');
-            };
-            self.changeToCompleted = function () {
-                self.filterMode('done');
+            self.changeFilterMode = function (mode) {
+                self.filterMode(mode);
             };
             //#endregion
         }

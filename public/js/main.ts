@@ -43,11 +43,7 @@ class TodoApp {
 	//Languages
 	currentLangOption: KnockoutObservable<string>
 	currentLang: KnockoutComputed<Lang>
-	changeLangToEng: () => void
-	changeLangToKor: () => void
-	changeLangToJap: () => void
-	changeLangToPol: () => void
-	changeLangToSwe: () => void
+	changeLang: (lang: string) => void
 	engLang: Lang
 	koreanLang: Lang
 	langBoxVisible: KnockoutObservable<boolean>
@@ -63,69 +59,44 @@ class TodoApp {
 	//Filters
 	filterMode: KnockoutObservable<string>
 	filteredTaskList: KnockoutComputed<object>
-	changeToAll: () => void
-	changeToActive: () => void
-	changeToCompleted: () => void
+	changeFilterMode: (mode: string) => void
 
     constructor() {
 		let self = this;
-		const enter_key:number = 13;
-		function keyhandlerBindingFactory(keyCode: number) {
-			return {
-				init: function (element: HTMLElement, valueAccessor: any, allBindingsAccessor: any, data: any, bindingContext: any) {
-					let wrappedHandler: any;
-					let newValueAccessor: any;
-					// wrap the handler with a check for the enter key
-					wrappedHandler = function (data: any, event: any) {
-						if (event.keyCode === keyCode) {
-							valueAccessor().call(this, data, event);
-						}
-					};
-					// create a valueAccessor with the options that we would want to pass to the event binding
-					newValueAccessor = function () {
-						return {
-							keyup: wrappedHandler
-						};
-					};
-					// call the real event binding's init function
-					ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data, bindingContext);
+		//Custom ko binding
+		ko.bindingHandlers.enterKey = {
+			init: (element: HTMLElement, valueAccessor: any, allBindingsAccessor: any, data: any, bindingContext: any) => {
+				let wrappedHandler = (data: any, event: any) => {
+					if(event.keyCode === 13) 
+						valueAccessor().call(this, data, event);
 				}
-			};
-		}
-		ko.bindingHandlers.enterKey = keyhandlerBindingFactory(enter_key);
+				let newValueAccessor = () => {
+					return {keyup: wrappedHandler }
+				}
+				ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data, bindingContext);
+			}
+		};
 		//#region Language Switcher
 			self.langBoxVisible = ko.observable(false);
-			self.currentLangOption = ko.observable('eng');
+			self.currentLangOption = ko.observable('eng');//Which language is standard
 			self.currentLang = ko.computed(() => {
 				switch(self.currentLangOption()){
 					case 'eng':
 						return new Lang("items left", "all", "active", "completed", "Clear completed", "what be needing doneing", "todos");
-					case 'kor':
+					case 'ko':
 						return new Lang("남은 항목", "모든", "유효한", "완료된", "명확한 완료","해야 할 일", "할것");
 					case 'jap':
 						return new Lang("左のアイテム", "すべて", "アクティブ", "完了", "クリア済み", "実行する必要があるもの", "リスト");
 					case 'pol':
-						return new Lang("rzeczy w lewo", "wszystko", "obecny", "zakończony", "Czyszczenie zakończone", "Co musi być zrobione", "do zrobienia");
+						return new Lang("Rzeczy w lewo", "Wszystko", "Obecny", "Zakończony", "Czyszczenie zakończone", "Co musi być zrobione", "Do zrobienia");
 					case 'swe':
 						return new Lang("kvar att göra", "allt", "aktiva", "klara", "Töm klara", "vad ska göras", "att göra");
 					default:
 						return new Lang("items left", "all", "active", "completed", "Clear completed","what be needing doneing", "todos");
 				}
 			}, this);
-			self.changeLangToEng = () => {
-				self.currentLangOption('eng');
-			};
-			self.changeLangToKor = () => {
-				self.currentLangOption('kor');
-			};
-			self.changeLangToJap = () => {
-				self.currentLangOption('jap');
-			};
-			self.changeLangToPol = () => {
-				self.currentLangOption('pol');
-			};
-			self.changeLangToSwe = () => {
-				self.currentLangOption('swe');
+			self.changeLang = (lang) => {
+				self.currentLangOption(lang);
 			};
 			self.toggleLangBox = (() => {
 				return self.langBoxVisible() == true ? self.langBoxVisible(false) : self.langBoxVisible(true);
@@ -174,7 +145,7 @@ class TodoApp {
 			self.filterMode = ko.observable('all');
 			self.filteredTaskList = ko.computed(() => {
 				switch(self.filterMode()){
-					case 'todo':
+					case 'active':
 						return self.taskList().filter((task: Task) => {
 							return !task.completed();
 						});
@@ -186,14 +157,8 @@ class TodoApp {
 						return self.taskList();
 				}
 			}, this);
-			self.changeToAll = () => {
-				self.filterMode('all');
-			}
-			self.changeToActive = () => {
-				self.filterMode('todo');
-			}
-			self.changeToCompleted = () => {
-				self.filterMode('done');
+			self.changeFilterMode = (mode) => {
+				self.filterMode(mode);
 			}
 		//#endregion
 	}

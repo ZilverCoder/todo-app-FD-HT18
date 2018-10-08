@@ -13,11 +13,11 @@
 	<body>
 		<h1 class="todo--title" data-bind="text: currentLang().todos"></h1>
 		<div class="lang-switcher--container" data-bind="css: { visible: langBoxVisible }">
-			<button class="lang--option" data-bind="click: changeLangToEng">ENG</button>
-			<button class="lang--option" data-bind="click: changeLangToKor">KO</button>
-			<button class="lang--option" data-bind="click: changeLangToJap">JAP</button>
-			<button class="lang--option" data-bind="click: changeLangToPol">POL</button>
-			<button class="lang--option" data-bind="click: changeLangToSwe">SWE</button>
+			<button class="lang--option" data-bind="click: function() { changeLang('eng') }">ENG</button>
+			<button class="lang--option" data-bind="click: function() { changeLang('swe') }">SWE</button>
+			<button class="lang--option" data-bind="click: function() { changeLang('ko') }">KO</button>
+			<button class="lang--option" data-bind="click: function() { changeLang('jap') }">JAP</button>
+			<button class="lang--option" data-bind="click: function() { changeLang('pol') }">POL</button>
 		</div>
 		<div class="todo-list--container">
 			<div class="todo-list--input">
@@ -39,9 +39,9 @@
 			<div class="todo-list--panel">
 				<p class="panel--item-count" data-bind="text: remainingTasks"></p>
 				<div class="panel--list-modes">
-					<a href="#All" data-bind="click: changeToAll, text: currentLang().filter_all"></a>
-					<a href="#Active" data-bind="click: changeToActive, text: currentLang().filter_active"></a>
-					<a href="#Completed" data-bind="click: changeToCompleted, text: currentLang().filter_completed"></a>
+					<a href="#All" data-bind="click: function() { changeFilterMode('all') }, text: currentLang().filter_all"></a>
+					<a href="#Active" data-bind="click: function() { changeFilterMode('active') }, text: currentLang().filter_active"></a>
+					<a href="#Completed" data-bind="click: function() { changeFilterMode('done') }, text: currentLang().filter_completed"></a>
 					<a href="#Clear" data-bind="click: clearCompletedTasks, text: currentLang().clearCompleted,visible: completedTasks"></a>
 				</div>
 			</div>
