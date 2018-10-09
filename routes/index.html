@@ -32,9 +32,9 @@
 			<div class="todo-list--panel">
 				<p class="panel--item-count" data-bind="text: remainingTasks"></p>
 				<div class="panel--list-modes">
-					<a href="#All" data-bind="click: function() { changeFilterMode('all') }">All</a>
-					<a href="#Active" data-bind="click: function() { changeFilterMode('active') }">Active</a>
-					<a href="#Completed" data-bind="click: function() { changeFilterMode('done') }">Completed</a>
+					<a href="#All" data-bind="click: function() { changeFilterMode('all') }, css: { active: filterMode() == 'all' }">All</a>
+					<a href="#Active" data-bind="click: function() { changeFilterMode('active') }, css: { active: filterMode() == 'active' }">Active</a>
+					<a href="#Completed" data-bind="click: function() { changeFilterMode('done') }, css: { active: filterMode() == 'done' }">Completed</a>
 					<a href="#Clear" data-bind="click: clearCompletedTasks, visible: completedTasks">Clear completed</a>
 				</div>
 			</div>
