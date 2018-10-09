@@ -21,8 +21,9 @@
 				<ul data-bind="foreach: filteredTaskList">
 					<li>
 						<div class="list--task">
-							<input class="task--toggle" type="checkbox" data-bind="checked: completed, attr: { id: 'task' + $index() }">
-							<label class="task--text" data-bind="text: value, attr: { for: 'task' + $index() }, css: { completed: completed }"></label>
+							<input class="task--toggle" type="checkbox" data-bind="checked: completed">
+							<label class="task--text" data-bind="text: value, css: { completed: completed, 'task--text--editing': editMode }, event: { dblclick: $root.editModeOn }"></label>
+							<input class="task--edit" type="text" data-bind="value: value, valueUpdate: 'afterkeydown', css: { editing: editMode }, enterKey: $root.saveEdit, escapeKey: $root.cancelEdit">
 							<button class="task--destroy" data-bind="click: $root.removeTask"></button>
 						</div>
 					</li>

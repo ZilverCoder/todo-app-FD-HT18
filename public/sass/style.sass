@@ -45,15 +45,6 @@ button
 				border-bottom: 1px solid $seperator-color
 				box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03)
 				background: $todo-list--container-bg
-			&--langOption
-				display: inline-block
-				position: relative
-				top: 10px
-				background: url('../../images/earth.svg')
-				background-repeat: no-repeat
-				background-size: 32px 32px
-				width: 32px
-				height: 32px
 	.todo-list
 		&--list
 			ul
@@ -85,6 +76,11 @@ button
 							line-height: 1.2
 							margin-top: auto
 							margin-bottom: auto
+						&--edit
+							display: none
+							margin-left: 40px
+							padding: 5px 5px 5px 5px
+							line-height: 1.4em
 						&--destroy
 							display: none
 							position: absolute
@@ -103,6 +99,10 @@ button
 								display: block
 							&:after
 								content: '×'
+					.editing
+						display: block
+					.task--text--editing
+						display: none
 					.completed
 						text-decoration: line-through
 						font-style: italic

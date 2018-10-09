@@ -2,12 +2,14 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Task = /** @class */ (function () {
-        function Task(value, completed) {
+        function Task(value, completed, editMode, previousValue) {
             this.value = ko.observable(value);
             this.completed = ko.observable(completed);
+            this.editMode = ko.observable(editMode);
+            this.previousValue = previousValue;
         }
         Task.prototype.task = function () {
-            return this.value, this.completed;
+            return this.value, this.completed, this.editMode, this.previousValue;
         };
         return Task;
     }());
@@ -28,12 +30,24 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
                     ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data, bindingContext);
                 }
             };
+            ko.bindingHandlers.escapeKey = {
+                init: function (element, valueAccessor, allBindingsAccessor, data, bindingContext) {
+                    var wrappedHandler = function (data, event) {
+                        if (event.keyCode === 27)
+                            valueAccessor().call(_this, data, event);
+                    };
+                    var newValueAccessor = function () {
+                        return { keyup: wrappedHandler };
+                    };
+                    ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data, bindingContext);
+                }
+            };
             //#region Functions
             self.taskValue = ko.observable();
             self.taskList = ko.observableArray();
             self.addTask = (function () {
                 if (self.taskValue().length > 0)
-                    self.taskList.push(new Task(self.taskValue(), false));
+                    self.taskList.push(new Task(self.taskValue(), false, false, ""));
                 self.taskValue('');
             }).bind(this);
             self.toggleAllCompleted = (function () {
@@ -64,6 +78,17 @@ define(["require", "exports", "knockout"], function (require, exports, ko) {
             self.completedTasks = ko.computed(function () {
                 return self.taskList().length - _this.remainingTasksCount() > 0;
             }, this);
+            self.editModeOn = (function (task) {
+                task.editMode(true);
+                task.previousValue = task.value();
+            }).bind(this);
+            self.cancelEdit = (function (task) {
+                task.editMode(false);
+                task.value(task.previousValue);
+            }).bind(this);
+            self.saveEdit = (function (task) {
+                task.editMode(false);
+            }).bind(this);
             //#endregion
             //#region Filter Functions
             self.filterMode = ko.observable('all');

@@ -3,12 +3,16 @@ import * as ko from "knockout";
 class Task {
 	value: KnockoutObservable<string>
 	completed: KnockoutObservable<boolean>
-	constructor(value: string, completed: boolean){
+	editMode: KnockoutObservable<boolean>
+	previousValue: string
+	constructor(value: string, completed: boolean, editMode: boolean, previousValue: string){
 		this.value = ko.observable(value);
 		this.completed = ko.observable(completed);
+		this.editMode = ko.observable(editMode);
+		this.previousValue = previousValue;
 	}
 	task() {
-		return this.value, this.completed;
+		return this.value, this.completed, this.editMode, this.previousValue;
 	}
 }
 
@@ -23,6 +27,10 @@ class TodoApp {
 	remainingTasks: KnockoutComputed<string>
 	completedTasks: KnockoutComputed<boolean>
 	clearCompletedTasks: KnockoutComputed<boolean>
+
+	editModeOn: KnockoutComputed<boolean>
+	saveEdit: KnockoutComputed<boolean>
+	cancelEdit: () => void
 	//Filters
 	filterMode: KnockoutObservable<string>
 	filteredTaskList: KnockoutComputed<object>
@@ -31,24 +39,36 @@ class TodoApp {
     constructor() {
 		let self = this;
 		//Custom ko binding
-		ko.bindingHandlers.enterKey = {
-			init: (element: HTMLElement, valueAccessor: any, allBindingsAccessor: any, data: any, bindingContext: any) => {
-				let wrappedHandler = (data: any, event: any) => {
-					if(event.keyCode === 13) 
-						valueAccessor().call(this, data, event);
+			ko.bindingHandlers.enterKey = {
+				init: (element: HTMLElement, valueAccessor: any, allBindingsAccessor: any, data: any, bindingContext: any) => {
+					let wrappedHandler = (data: any, event: any) => {
+						if(event.keyCode === 13) 
+							valueAccessor().call(this, data, event);
+					}
+					let newValueAccessor = () => {
+						return {keyup: wrappedHandler }
+					}
+					ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data, bindingContext);
 				}
-				let newValueAccessor = () => {
-					return {keyup: wrappedHandler }
+			};
+			ko.bindingHandlers.escapeKey = {
+				init: (element: HTMLElement, valueAccessor: any, allBindingsAccessor: any, data: any, bindingContext: any) => {
+					let wrappedHandler = (data: any, event: any) => {
+						if(event.keyCode === 27) 
+							valueAccessor().call(this, data, event);
+					}
+					let newValueAccessor = () => {
+						return {keyup: wrappedHandler }
+					}
+					ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data, bindingContext);
 				}
-				ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data, bindingContext);
-			}
-		};
+			};
 		//#region Functions
 			self.taskValue = ko.observable();
 			self.taskList = ko.observableArray();
 			self.addTask = (() => {
 				if(self.taskValue().length > 0)
-					self.taskList.push(new Task(self.taskValue(), false));
+					self.taskList.push(new Task(self.taskValue(), false, false, ""));
 				self.taskValue('');
 			}).bind(this);
 			self.toggleAllCompleted = (() => {
@@ -81,6 +101,18 @@ class TodoApp {
 			self.completedTasks = ko.computed(() => {
 				return self.taskList().length - this.remainingTasksCount() > 0;
 			}, this);
+
+			self.editModeOn = ((task: Task) => {
+				task.editMode(true);
+				task.previousValue = task.value();
+            }).bind(this);
+            self.cancelEdit = ((task: Task) => {
+				task.editMode(false);
+				task.value(task.previousValue);
+            }).bind(this);
+            self.saveEdit = ((task: Task) => {
+				task.editMode(false);
+            }).bind(this);
 		//#endregion
 		//#region Filter Functions
 			self.filterMode = ko.observable('all');
