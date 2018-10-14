@@ -11,6 +11,7 @@
 		"@types/knockout": "^3.4.59",
 		"gulp-util": "^3.0.8",
 		"knockout": "^3.4.2",
+		"latest": "^0.2.0",
 		"path": "^0.12.7",
 		"requirejs": "^2.3.6"
 	},

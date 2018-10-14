@@ -3,18 +3,22 @@ import * as ko from "knockout";
 class Task {
 	value: KnockoutObservable<string>
 	completed: KnockoutObservable<boolean>
-	constructor(value: string, completed: boolean){
+	editMode: KnockoutObservable<boolean>
+	previousValue: string
+	constructor(value: string, completed: boolean, editMode: boolean, previousValue: string){
 		this.value = ko.observable(value);
 		this.completed = ko.observable(completed);
+		this.editMode = ko.observable(editMode);
+		this.previousValue = previousValue;
 	}
 	task() {
-		return this.value, this.completed;
+		return this.value, this.completed, this.editMode, this.previousValue;
 	}
 }
 
 class TodoApp {
 	taskValue: KnockoutObservable<string>
-	taskList: KnockoutObservableArray<object>
+	taskList: KnockoutObservableArray<Task>
 	//Functions
 	addTask: KnockoutComputed<string>
 	toggleAllCompleted: KnockoutComputed<boolean>
@@ -23,45 +27,48 @@ class TodoApp {
 	remainingTasks: KnockoutComputed<string>
 	completedTasks: KnockoutComputed<boolean>
 	clearCompletedTasks: KnockoutComputed<boolean>
+
+	editModeOn: KnockoutComputed<boolean>
+	saveEdit: KnockoutComputed<boolean>
+	cancelEdit: () => void
 	//Filters
 	filterMode: KnockoutObservable<string>
 	filteredTaskList: KnockoutComputed<object>
-	changeToAll: () => void
-	changeToActive: () => void
-	changeToCompleted: () => void
+	changeFilterMode: (mode: string) => void
 
     constructor() {
 		let self = this;
-		const enter_key:number = 13;
-		function keyhandlerBindingFactory(keyCode: number) {
-			return {
-				init: function (element: HTMLElement, valueAccessor: any, allBindingsAccessor: any, data: any, bindingContext: any) {
-					let wrappedHandler: any;
-					let newValueAccessor: any;
-					// wrap the handler with a check for the enter key
-					wrappedHandler = function (data: any, event: any) {
-						if (event.keyCode === keyCode) {
+		//Custom ko binding
+			ko.bindingHandlers.enterKey = {
+				init: (element: HTMLElement, valueAccessor: any, allBindingsAccessor: any, data: any, bindingContext: any) => {
+					let wrappedHandler = (data: any, event: any) => {
+						if(event.keyCode === 13) 
 							valueAccessor().call(this, data, event);
-						}
-					};
-					// create a valueAccessor with the options that we would want to pass to the event binding
-					newValueAccessor = function () {
-						return {
-							keyup: wrappedHandler
-						};
-					};
-					// call the real event binding's init function
+					}
+					let newValueAccessor = () => {
+						return {keyup: wrappedHandler }
+					}
 					ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data, bindingContext);
 				}
 			};
-		}
-		ko.bindingHandlers.enterKey = keyhandlerBindingFactory(enter_key);
+			ko.bindingHandlers.escapeKey = {
+				init: (element: HTMLElement, valueAccessor: any, allBindingsAccessor: any, data: any, bindingContext: any) => {
+					let wrappedHandler = (data: any, event: any) => {
+						if(event.keyCode === 27) 
+							valueAccessor().call(this, data, event);
+					}
+					let newValueAccessor = () => {
+						return {keyup: wrappedHandler }
+					}
+					ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data, bindingContext);
+				}
+			};
 		//#region Functions
 			self.taskValue = ko.observable();
 			self.taskList = ko.observableArray();
 			self.addTask = (() => {
 				if(self.taskValue().length > 0)
-					self.taskList.push(new Task(self.taskValue(), false));
+					self.taskList.push(new Task(self.taskValue(), false, false, ""));
 				self.taskValue('');
 			}).bind(this);
 			self.toggleAllCompleted = (() => {
@@ -89,17 +96,29 @@ class TodoApp {
 				}).length;
 			});
 			self.remainingTasks = ko.computed(() => {
-				return self.remainingTasksCount() + " items left";
+				return self.remainingTasksCount() == 1 ? self.remainingTasksCount() + "\titem left" : self.remainingTasksCount() + " items left";
 			}, this);
 			self.completedTasks = ko.computed(() => {
 				return self.taskList().length - this.remainingTasksCount() > 0;
 			}, this);
+
+			self.editModeOn = ((task: Task) => {
+				task.editMode(true);
+				task.previousValue = task.value();
+            }).bind(this);
+            self.cancelEdit = ((task: Task) => {
+				task.editMode(false);
+				task.value(task.previousValue);
+            }).bind(this);
+            self.saveEdit = ((task: Task) => {
+				task.editMode(false);
+            }).bind(this);
 		//#endregion
 		//#region Filter Functions
 			self.filterMode = ko.observable('all');
 			self.filteredTaskList = ko.computed(() => {
 				switch(self.filterMode()){
-					case 'todo':
+					case 'active':
 						return self.taskList().filter((task: Task) => {
 							return !task.completed();
 						});
@@ -111,14 +130,8 @@ class TodoApp {
 						return self.taskList();
 				}
 			}, this);
-			self.changeToAll = () => {
-				self.filterMode('all');
-			}
-			self.changeToActive = () => {
-				self.filterMode('todo');
-			}
-			self.changeToCompleted = () => {
-				self.filterMode('done');
+			self.changeFilterMode = (mode) => {
+				self.filterMode(mode);
 			}
 		//#endregion
 	}

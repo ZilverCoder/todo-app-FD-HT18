@@ -7,8 +7,36 @@ $font-title: 400 50px/18px 'Montserrat', sans-serif
 
 //COLORS
 //$bg-color: #00403f
-$bg-color: #f5f5f5
-$seperator-color: #a5a5a5
+//$bg-color: #f5f5f5
+// $seperator-color: #a5a5a5
+// $white: #fff
+// $black: #000
+// $red: hsla(0, 100%, 50%, 1)
+
+//Colors V2
+$bg-color: hsla(189, 21%, 70%, 1)
+$seperator-color: hsla(34, 57%, 54%, 1)
+$todo-list--container-bg: hsla(0, 0%, 96%, 1)
+$title-madeBy-color: hsla(193, 22%, 45%, 1)
 $white: #fff
 $black: #000
 $red: hsla(0, 100%, 50%, 1)
+
+//Mixins
+@mixin flexCenter
+	display: -webkit-flex
+	display: flex
+	align-content: center
+	justify-content: center
+
+@mixin resetButton
+	border: 0
+	background: none
+
+@mixin langContainerHeight
+	-webkit-transition-property: inherit
+	-webkit-transition-duration: 0.3s
+	-webkit-transition-timing-function: ease-in-out
+	transition-property: inherit
+	transition-duration: 0.3s
+	transition-timing-function: ease-in-out

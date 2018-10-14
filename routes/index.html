@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
+	<head>
+		<meta charset="UTF-8" />
 		<title>Hello Knockout!</title>
 		<link rel="stylesheet" href="../public/compiled/css/style.css">
-    </head>
-    <body>
-		<h1 class="todo-title">todos</h1>
+		<script src="../public/compiled/js/require-config.js" defer></script>
+		<script src="../node_modules/requirejs/require.js"></script>
+		<script>
+			require(["../public/compiled/js/main"]);
+		</script>
+	</head>
+	<body>
+		<h1 class="todo--title">Todo</h1>
 		<div class="todo-list--container">
-			<div class="todo--list--input">
-				<button data-bind="click: toggleAllCompleted, visible: taskList().length">▾</button>
-				<input class="input--newItem" type="text" data-bind="value: taskValue, enterKey: addTask" placeholder="What needs to be done?" autofocus>
+			<div class="todo-list--input">
+				<button class="input--toggleAll" data-bind="click: toggleAllCompleted, visible: taskList().length">▾</button>
+				<input class="input--newItem" type="text" data-bind="value: taskValue, enterKey: addTask, style: { 'margin-left': taskList().length > 0 ? '0px' : '30px'}" placeholder="What needs to be done" autofocus>
 			</div>
 			<div class="todo-list--list">
 				<ul data-bind="foreach: filteredTaskList">
 					<li>
 						<div class="list--task">
-							<input class="task--toggle" type="checkbox" data-bind="checked: completed, attr: { id: 'task' + $index() }">
-							<label class="task--text completed" data-bind="text: value, attr: { for: 'task' + $index() }"></label>
+							<input class="task--toggle" type="checkbox" data-bind="checked: completed">
+							<label class="task--text" data-bind="text: value, css: { completed: completed, 'task--text--editing': editMode }, event: { dblclick: $root.editModeOn }"></label>
+							<input class="task--edit" type="text" data-bind="value: value, valueUpdate: 'afterkeydown', css: { editing: editMode }, enterKey: $root.saveEdit, escapeKey: $root.cancelEdit" autofocus>
 							<button class="task--destroy" data-bind="click: $root.removeTask"></button>
 						</div>
 					</li>
@@ -26,19 +32,14 @@
 			<div class="todo-list--panel">
 				<p class="panel--item-count" data-bind="text: remainingTasks"></p>
 				<div class="panel--list-modes">
-					<a href="#All" data-bind="click: changeToAll">All</a>
-					<a href="#Active" data-bind="click: changeToActive">Active</a>
-					<a href="#Completed" data-bind="click: changeToCompleted">Completed</a>
+					<a href="#All" data-bind="click: function() { changeFilterMode('all') }, css: { active: filterMode() == 'all' }">All</a>
+					<a href="#Active" data-bind="click: function() { changeFilterMode('active') }, css: { active: filterMode() == 'active' }">Active</a>
+					<a href="#Completed" data-bind="click: function() { changeFilterMode('done') }, css: { active: filterMode() == 'done' }">Completed</a>
 					<a href="#Clear" data-bind="click: clearCompletedTasks, visible: completedTasks">Clear completed</a>
 				</div>
 			</div>
 		</div>
 
-		<script src="../node_modules/requirejs/require.js"></script>
-		<script src="../public/compiled/js/require-config.js"></script>
-		<script>
-			require(["../public/compiled/js/main"]);
-		</script>
-	<p id="madeByText">Todo App Made by ZilverCoder and Chibi</p>
-    </body>
+		<p id="madeByText">Todo App Made by <span><a href="https://github.com/zilverCoder" target="_blank">ZilverCoder</a></span> and <span><a href="https://github.com/Chibi86" target="_blank">Chibi</a></span></p>
+  </body>
 </html>
