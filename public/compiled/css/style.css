@@ -30,155 +30,136 @@ button {
   border-radius: 5px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
   z-index: 200; }
-
-.todo-list--container .todo-list--input {
-  display: inline-block; }
-
-.todo-list--container .todo-list--input button {
-  text-align: center;
-  font-size: 30px;
-  color: #cd9347; }
-
-.todo-list--container .todo-list--input .input--toggleAll {
-  display: inline-block;
-  position: relative;
-  top: 4px; }
-
-.todo-list--container .todo-list--input .input--newItem {
-  font: 400 20px/18px "Montserrat", sans-serif;
-  width: 420px;
-  height: 30px;
-  border: none;
-  border-bottom: 1px solid #cd9347;
-  box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
-  background: whitesmoke; }
-
-.todo-list--container .todo-list--list ul {
-  list-style-type: none;
-  padding-left: 0; }
-
-.todo-list--container .todo-list--list li {
-  position: relative;
-  font: 400 20px/18px "Montserrat", sans-serif; }
-
-.todo-list--container .todo-list--list li:hover .task--destroy {
-  display: block !important; }
-
-.todo-list--container .todo-list--list li .list--task .task--toggle {
-  text-align: center;
-  width: 40px;
-  height: auto;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-  border: none;
-  -webkit-appearance: none;
-  appearance: none; }
-
-.todo-list--container .todo-list--list li .list--task .task--text {
-  word-break: break-all;
-  padding: 15px 15px 15px 50px;
-  display: block;
-  line-height: 1.2;
-  margin-top: auto;
-  margin-bottom: auto; }
-
-.todo-list--container .todo-list--list li .list--task .task--edit {
-  display: none;
-  margin-left: 40px;
-  padding: 5px 5px 5px 5px;
-  line-height: 1.4em;
-  font-size: 20px;
-  width: 400px;
-  height: 25px;
-  border: none;
-  box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2); }
-
-.todo-list--container .todo-list--list li .list--task .task--destroy {
-  display: none;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 10px;
-  width: 40px;
-  height: 40px;
-  margin: auto 0;
-  font: 400 20px/18px "Montserrat", sans-serif;
-  font-size: 40px;
-  color: #af5b5e;
-  background: none;
-  border: none; }
-
-.todo-list--container .todo-list--list li .list--task .task--destroy:hover {
-  display: block; }
-
-.todo-list--container .todo-list--list li .list--task .task--destroy:after {
-  content: '×'; }
-
-.todo-list--container .todo-list--list li .list--task .editing {
-  display: block; }
-
-.todo-list--container .todo-list--list li .list--task .task--text--editing {
-  display: none; }
-
-.todo-list--container .todo-list--list li .list--task .completed {
-  text-decoration: line-through;
-  font-style: italic; }
-
-.todo-list--container .todo-list--list li .list--task .task--toggle {
-  opacity: 0; }
-
-.todo-list--container .todo-list--list li .list--task .task--toggle + label {
-  background-image: url("../../images/not_checked.svg");
-  background-repeat: no-repeat;
-  background-position: center left; }
-
-.todo-list--container .todo-list--list li .list--task .task--toggle:checked + label {
-  background-image: url("../../images/checked.svg"); }
-
-.todo-list--container .todo-list--panel {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  padding: 0 1rem 0 1rem;
-  font: 400 15px/18px "Montserrat", sans-serif; }
-
-.todo-list--container .todo-list--panel .panel--list-modes {
-  justify-content: center;
-  align-content: center;
-  padding-left: 10%;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px; }
-
-.todo-list--container .todo-list--panel .panel--list-modes a {
-  color: #000;
-  text-decoration: none;
-  padding-right: 10px;
-  padding-left: 10px;
-  text-decoration: none; }
-
-.todo-list--container .todo-list--panel .panel--list-modes a:active, .todo-list--container .todo-list--panel .panel--list-modes a:hover, .todo-list--container .todo-list--panel .panel--list-modes a:visited {
-  color: #000; }
-
-.todo-list--container .todo-list--panel .panel--list-modes a:last-child {
-  transition: all 500ms;
-  padding: 0 0 0 15px; }
-
-.todo-list--container .todo-list--panel .panel--list-modes .active {
-  border: 1px solid rgba(175, 47, 47, 0.2); }
+  .todo-list--container .todo-list--input {
+    display: inline-block; }
+    .todo-list--container .todo-list--input button {
+      text-align: center;
+      font-size: 30px;
+      color: #cd9347; }
+    .todo-list--container .todo-list--input .input--toggleAll {
+      display: inline-block;
+      position: relative;
+      top: 4px; }
+    .todo-list--container .todo-list--input .input--newItem {
+      font: 400 20px/18px "Montserrat", sans-serif;
+      width: 420px;
+      height: 30px;
+      border: none;
+      border-bottom: 1px solid #cd9347;
+      box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+      background: whitesmoke; }
+  .todo-list--container .todo-list--list ul {
+    list-style-type: none;
+    padding-left: 0; }
+  .todo-list--container .todo-list--list li {
+    position: relative;
+    font: 400 20px/18px "Montserrat", sans-serif; }
+    .todo-list--container .todo-list--list li:hover .task--destroy {
+      display: block !important; }
+    .todo-list--container .todo-list--list li .list--task .task--toggle {
+      text-align: center;
+      width: 40px;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+      border: none;
+      -webkit-appearance: none;
+      appearance: none; }
+    .todo-list--container .todo-list--list li .list--task .task--text {
+      word-break: break-all;
+      padding: 15px 15px 15px 50px;
+      display: block;
+      line-height: 1.2;
+      margin-top: auto;
+      margin-bottom: auto; }
+    .todo-list--container .todo-list--list li .list--task .task--edit {
+      display: none;
+      margin-left: 40px;
+      padding: 5px 5px 5px 5px;
+      line-height: 1.4em;
+      font-size: 20px;
+      width: 400px;
+      height: 25px;
+      border: none;
+      box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2); }
+    .todo-list--container .todo-list--list li .list--task .task--destroy {
+      display: none;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      margin: auto 0;
+      font: 400 20px/18px "Montserrat", sans-serif;
+      font-size: 40px;
+      color: #af5b5e;
+      background: none;
+      border: none; }
+      .todo-list--container .todo-list--list li .list--task .task--destroy:hover {
+        display: block; }
+      .todo-list--container .todo-list--list li .list--task .task--destroy:after {
+        content: '×'; }
+    .todo-list--container .todo-list--list li .list--task .editing {
+      display: block; }
+    .todo-list--container .todo-list--list li .list--task .task--text--editing {
+      display: none; }
+    .todo-list--container .todo-list--list li .list--task .completed {
+      text-decoration: line-through;
+      font-style: italic; }
+    .todo-list--container .todo-list--list li .list--task .task--toggle {
+      opacity: 0; }
+    .todo-list--container .todo-list--list li .list--task .task--toggle + label {
+      background-image: url("../../images/not_checked.svg");
+      background-repeat: no-repeat;
+      background-position: center left; }
+    .todo-list--container .todo-list--list li .list--task .task--toggle:checked + label {
+      background-image: url("../../images/checked.svg"); }
+  .todo-list--container .todo-list--panel {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0 1rem 0 1rem;
+    font: 400 15px/18px "Montserrat", sans-serif; }
+    .todo-list--container .todo-list--panel .panel--list-modes {
+      justify-content: center;
+      align-content: center;
+      padding-left: 10%;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px; }
+      .todo-list--container .todo-list--panel .panel--list-modes a {
+        color: #000;
+        text-decoration: none;
+        padding-right: 10px;
+        padding-left: 10px;
+        text-decoration: none; }
+        .todo-list--container .todo-list--panel .panel--list-modes a:active, .todo-list--container .todo-list--panel .panel--list-modes a:hover, .todo-list--container .todo-list--panel .panel--list-modes a:visited {
+          color: #000; }
+        .todo-list--container .todo-list--panel .panel--list-modes a:last-child {
+          transition: all 500ms;
+          padding: 0 0 0 15px; }
+      .todo-list--container .todo-list--panel .panel--list-modes .active {
+        border: 1px solid rgba(175, 47, 47, 0.2); }
 
 #madeByText {
   text-align: center;
   color: #5a818c;
   font-family: 'Montserrat'; }
+  #madeByText a {
+    color: #5a818c;
+    text-decoration: none; }
+    #madeByText a:active, #madeByText a:visited {
+      color: #5a818c;
+      text-decoration: none; }
 
 @media screen and (max-width: 992px) {
   .todo-list--container {
     width: 90vw; }
-  .todo-list--container .todo-list--input .input--newItem {
-    width: 70vw; }
-  .todo-list--container .task--destroy {
-    display: block !important; } }
+    .todo-list--container .todo-list--input .input--newItem {
+      width: 70vw; }
+    .todo-list--container .task--destroy {
+      display: block !important; } }
